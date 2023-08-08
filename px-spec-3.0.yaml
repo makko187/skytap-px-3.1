@@ -1,11 +1,11 @@
-# SOURCE: https://install.portworx.com/?operator=true&mc=false&kbver=1.27.4&ns=portworx&b=true&iop=6&s=%22size%3D150%22&pureSanType=ISCSI&c=px-cluster-5c3c3758-683c-430e-bfa7-b05c7ba8b83a&stork=true&csi=true&mon=true&tel=true&st=k8s&promop=true
+# SOURCE: https://install.portworx.com/?operator=true&mc=false&kbver=1.27.4&ns=portworx&b=true&iop=6&s=%22size%3D150%22&pureSanType=ISCSI&c=px-cluster-5c3c3758-683c-430e-bfa7-b05c7ba8b83a&stork=true&csi=true&mon=true&tel=true&st=k8s&e=FACD_TOPOLOGY_ENABLED%3Dtrue&promop=true
 kind: StorageCluster
 apiVersion: core.libopenstorage.org/v1
 metadata:
   name: px-cluster-5c3c3758-683c-430e-bfa7-b05c7ba8b83a
   namespace: portworx
   annotations:
-    portworx.io/install-source: "https://install.portworx.com/?operator=true&mc=false&kbver=1.27.4&ns=portworx&b=true&iop=6&s=%22size%3D150%22&pureSanType=ISCSI&c=px-cluster-5c3c3758-683c-430e-bfa7-b05c7ba8b83a&stork=true&csi=true&mon=true&tel=true&st=k8s&promop=true"
+    portworx.io/install-source: "https://install.portworx.com/?operator=true&mc=false&kbver=1.27.4&ns=portworx&b=true&iop=6&s=%22size%3D150%22&pureSanType=ISCSI&c=px-cluster-5c3c3758-683c-430e-bfa7-b05c7ba8b83a&stork=true&csi=true&mon=true&tel=true&st=k8s&e=FACD_TOPOLOGY_ENABLED%3Dtrue&promop=true"
 spec:
   image: portworx/oci-monitor:3.0.0
   imagePullPolicy: Always
@@ -34,3 +34,5 @@ spec:
   env:
   - name: PURE_FLASHARRAY_SAN_TYPE
     value: "ISCSI"
+  - name: "FACD_TOPOLOGY_ENABLED"
+    value: "true"
