@@ -1,0 +1,16 @@
+{
+  "FlashArrays": [
+    {
+      "MgmtEndPoint": "10.0.0.11",
+      "APIToken": "f9f14d97-c52e-12e0-e670-877c49516d51"
+    }
+  ],
+    "FlashBlades": [
+        {
+            "MgmtEndPoint": "10.255.8.20",
+            "APIToken": "T-8d8f7437-1889-460b-8209-a70813be7e99",
+            "NFSEndPoint": "10.255.8.120"
+        }
+    ]
+}
+
