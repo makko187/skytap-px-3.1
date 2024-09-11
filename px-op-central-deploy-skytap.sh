@@ -116,4 +116,40 @@ sudo chmod +x /usr/local/bin/storkctl
 sleep 2
 
 storkctl version
-echo "Portworx Installation Complete!!!!"
+
+
+helm repo add portworx http://charts.portworx.io/ && helm repo update
+
+#########################
+echo "Do you wish to PX Central?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) echo "installing px-central"; break;;
+        No ) echo "Portworx Installation Complete!!!!"; exit;;
+    esac
+done
+sleep 2
+helm repo add portworx http://charts.portworx.io/ && helm repo update
+
+sleep 2
+helm install px-central portworx/px-central --namespace central --create-namespace --version 2.7.1 --set persistentStorage.enabled=true,persistentStorage.storageClassName="px-replicated"
+while true; do
+    NUM_READY=`kubectl get po --namespace central -ljob-name=pxcentral-post-install-hook  -o wide | awk '{print $3}' | grep -iv error`
+    if [ "${NUM_READY}" == "Completed" ]; then
+        echo "PX Central pods are ready !"
+        kubectl get pods -n central -o wide
+        break
+    else
+        echo "Waiting for px-central nodes to be ready. Current ready nodes: ${NUM_READY}"
+    fi
+    sleep 5
+done
+
+helm get values --namespace central px-central -o yaml > values-px-upgrade.yaml && kubectl delete job pxcentral-post-install-hook --namespace central && helm upgrade px-central portworx/px-central --namespace central --version 2.7.1 --set pxlicenseserver.enabled=true,pxmonitor.enabled=true,persistentStorage.enabled=true,persistentStorage.storageClassName="sc-portworx-fa-direct-access",installCRDs=true,pxmonitor.pxCentralEndpoint=10.0.0.30,pxmonitor.sslEnabled=true,images.pullSecrets[0]=docregistry-secret -f values-px-upgrade.yaml
+sleep 2
+kubectl get svc -n central
+
+echo "Update svc of "px-central-ui" to NodePort"
+echo "run command below"
+echo "kubectl edit svc px-central-ui -n central"
+echo "PX Central Install Complete"
