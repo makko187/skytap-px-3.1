@@ -117,9 +117,6 @@ sleep 2
 
 storkctl version
 
-
-helm repo add portworx http://charts.portworx.io/ && helm repo update
-
 #########################
 echo "Do you wish to PX Central?"
 select yn in "Yes" "No"; do
