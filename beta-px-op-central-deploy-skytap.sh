@@ -131,7 +131,7 @@ helm repo add portworx http://charts.portworx.io/ && helm repo update
 sleep 2
 helm install px-central portworx/px-central --namespace central --create-namespace --version 2.7.1 --set persistentStorage.enabled=true,persistentStorage.storageClassName="px-replicated"
 while true; do
-    NUM_READY=`kubectl get po --namespace central -ljob-name=pxcentral-post-install-hook  -o wide | awk '{print $3}' | grep -iv error`
+    NUM_READY=`kubectl get po --namespace central -ljob-name=pxcentral-post-install-hook  -o wide | awk 'END{print $3}' | grep -iv error`
     if [ "${NUM_READY}" == "Completed" ]; then
         echo "PX Central pods are ready !"
         kubectl get pods -n central -o wide
