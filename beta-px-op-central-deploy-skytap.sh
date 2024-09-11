@@ -142,7 +142,7 @@ while true; do
     sleep 5
 done
 
-helm get values --namespace central px-central -o yaml > values-px-upgrade.yaml && kubectl delete job pxcentral-post-install-hook --namespace central && helm upgrade px-central portworx/px-central --namespace central --version 2.7.1 --set pxlicenseserver.enabled=true,pxmonitor.enabled=true,persistentStorage.enabled=true,persistentStorage.storageClassName="sc-portworx-fa-direct-access",installCRDs=true,pxmonitor.pxCentralEndpoint=10.0.0.30,pxmonitor.sslEnabled=true,images.pullSecrets[0]=docregistry-secret -f values-px-upgrade.yaml
+helm get values --namespace central px-central -o yaml > values-px-upgrade.yaml && kubectl delete job pxcentral-post-install-hook --namespace central && helm upgrade px-central portworx/px-central --namespace central --version 2.7.1 --set pxlicenseserver.enabled=true,pxmonitor.enabled=true,persistentStorage.enabled=true,persistentStorage.storageClassName="px-replicated",installCRDs=true,pxmonitor.pxCentralEndpoint=10.0.0.30,pxmonitor.sslEnabled=true,images.pullSecrets[0]=docregistry-secret -f values-px-upgrade.yaml
 sleep 2
 kubectl get svc -n central
 
