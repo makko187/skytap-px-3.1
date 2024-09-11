@@ -50,14 +50,14 @@ while true; do
 done
 sleep 2
 
-echo " Step 4. Install PortWorx 3.0 Spec using FlashArray Cloud Drives:"
+echo " Step 4. Install PortWorx 3.1 Spec using FlashArray Cloud Drives:"
 sleep 5
 #kubectl apply -f px-spec-3.0.yaml
 kubectl apply -f 'https://install.portworx.com/3.1?operator=true&mc=false&kbver=1.28.5&ns=portworx&b=true&iop=6&s=%22size%3D150%22&pureSanType=ISCSI&ce=pure&c=px-cluster-b585985e-eddb-4172-ab38-62f8c803175a&stork=true&csi=true&mon=true&tel=true&st=k8s&promop=true'
 
 echo " Step 5. Wait for Portworx Installation to complete:"
 while true; do
-    NUM_READY=`kubectl get pods -n portworx -l name=portworx -o wide | grep Running | grep 2/2 | wc -l`
+    NUM_READY=`kubectl get pods -n portworx -l name=portworx -o wide | grep Running | grep 1/1 | wc -l`
     if [ "${NUM_READY}" == "3" ]; then
         echo "All portworx nodes are ready !"
         kubectl get pods -n portworx -l name=portworx -o wide
