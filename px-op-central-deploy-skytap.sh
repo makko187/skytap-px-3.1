@@ -118,7 +118,7 @@ sleep 2
 storkctl version
 
 #########################
-echo "Do you wish to PX Central?"
+echo "Do you wish to install PX Central?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) echo "installing px-central"; break;;
